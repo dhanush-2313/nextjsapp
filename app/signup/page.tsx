@@ -5,9 +5,15 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+interface userType {
+  email: string;
+  password: string;
+  username: string;
+}
+
 export default function SignupPage() {
   const router = useRouter();
-  const [user, setUser] = React.useState({
+  const [user, setUser] = React.useState<userType>({
     email: "",
     password: "",
     username: "",
@@ -77,7 +83,7 @@ export default function SignupPage() {
         onClick={onSignup}
         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
       >
-        {buttonDisabled ? "No signup" : "Signup"}
+        {buttonDisabled ? "Fill in details first!" : "Signup"}
       </button>
       <Link href="/login">Visit login page</Link>
     </div>
