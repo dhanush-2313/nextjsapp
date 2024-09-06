@@ -1,6 +1,7 @@
 import client from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import { sendEmail } from "@/helpers/mailer";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,6 +26,9 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
       },
     });
+
+    await sendEmail({ email, emailType: "VERIFY", userId: newUser.id });
+
     return NextResponse.json(
       { msg: "User created successfully" },
       { status: 200 }
