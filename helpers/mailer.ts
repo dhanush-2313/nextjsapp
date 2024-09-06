@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import client from "@/db";
 import bcryptjs from "bcryptjs";
-import { NextResponse } from "next/server";
 
 export const sendEmail = async ({ email, emailType, userId }: any) => {
   try {
@@ -34,19 +33,20 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       },
     });
 
+    const link =
+      emailType === "VERIFY"
+        ? `${process.env.domain}/verifyemail?token=${hashedToken}`
+        : `http://localhost:3000/forgotpassword`;
+
     const mailOptions = {
       from: "esp95935@gmail.com",
       to: email,
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
-      html: `<p>Click <a href="${
-        process.env.domain
-      }/verifyemail?token=${hashedToken}">here</a> to ${
+      html: `<p>Click <a href="${link}">here</a> to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
       }
-            or copy and paste the link below in your browser. <br> ${
-              process.env.domain
-            }/verifyemail?token=${hashedToken}
+            or copy and paste the link below in your browser. <br> ${link}
             </p>`,
     };
 

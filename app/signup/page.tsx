@@ -85,6 +85,7 @@ export default function SignupPage() {
       >
         {buttonDisabled ? "Fill in details first!" : "Signup"}
       </button>
+
       <Link href="/login">Visit login page</Link>
     </div>
   );

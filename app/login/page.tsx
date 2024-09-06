@@ -29,6 +29,22 @@ export default function LoginPage() {
     }
   };
 
+  const onForgot = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/verifyuser", user);
+      console.log("User verified ", response.data);
+      alert("check you mail for further instructions");
+    } catch (error: any) {
+      console.log("Reset failed", error.message);
+      alert("Please enter correct details");
+
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
@@ -67,6 +83,12 @@ export default function LoginPage() {
         Login here
       </button>
       <Link href="/signup">Visit Signup page</Link>
+      <button
+        onClick={onForgot}
+        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+      >
+        Forgot password
+      </button>
     </div>
   );
 }
